@@ -23,8 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Video files (too large for GitHub)
-public/intro-video.mp4
-*.mp4
+# Video files (excluding optimized intro video)
+# public/intro-video.mp4 is now kept - it's only 77KB
 *.mov
 *.webm
+# Other large mp4 files (but not intro-video.mp4)
+!public/intro-video.mp4
