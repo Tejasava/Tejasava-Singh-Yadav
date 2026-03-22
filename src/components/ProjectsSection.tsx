@@ -34,6 +34,31 @@ const projects = [
     description: 'Responsive streaming platform clone with modern UI/UX',
     link: 'https://github.com/tejasava/netflix-clone',
   },
+  {
+    title: 'Elanora',
+    description: 'Static e-commerce website showcasing modern web design principles with React. Features responsive product catalog, shopping cart functionality, and seamless user experience across all devices.',
+    link: 'https://github.com/Tejasava/Elanora',
+  },
+  {
+    title: 'Job Hunter',
+    description: 'Comprehensive job search and recruitment platform. Helps job seekers find relevant opportunities and enables employers to connect with qualified candidates efficiently.',
+    link: 'https://github.com/Tejasava/Job-Hunter',
+  },
+  {
+    title: 'JEE Rank & College Predictor',
+    description: 'AI-powered prediction tool for JEE exam aspirants. Predicts college placement based on rank and provides personalized recommendations for course selection and career planning.',
+    link: 'https://github.com/Tejasava/Jee-Rank-And-College-Predictor-',
+  },
+  {
+    title: 'Schooloo.ai',
+    description: 'Advanced AI-driven educational discovery platform. Leverages machine learning to match students with ideal schools based on preferences, academics, and career goals.',
+    link: 'https://github.com/Tejasava/schooloo.ai',
+  },
+  {
+    title: 'Emense',
+    description: 'Full-stack web application delivering comprehensive digital solutions. Built with modern technologies for scalability, performance, and user engagement. Live deployment for real-world impact.',
+    link: 'https://emense.in',
+  },
 ];
 
 const ProjectsSection = () => {
