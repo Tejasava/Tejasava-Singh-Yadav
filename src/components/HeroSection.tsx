@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Twitter, Instagram, Trophy } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import profileImage from '@/assets/profile.png';
+import profileImage from '@/assets/profile.jpg';
 
 const socialLinks = [
   { icon: Github, href: 'https://github.com/Tejasava', label: 'GitHub' },
