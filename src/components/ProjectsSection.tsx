@@ -5,11 +5,6 @@ import { Github, ExternalLink } from 'lucide-react';
 
 const projects = [
   {
-    title: 'SCHOOLOO',
-    description: 'School discovery and admission platform connecting parents with the best educational institutions',
-    link: 'https://github.com/tejasava/schooloo',
-  },
-  {
     title: 'SATIS',
     description: 'AI-powered Training & Interview Simulation Platform for career preparation',
     link: 'https://github.com/tejasava/satis',
