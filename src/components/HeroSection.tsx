@@ -183,16 +183,6 @@ const HeroSection = () => {
             <source src="/intro-video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-white text-center"
-            >
-              <div className="text-sm font-semibold">Hover to see intro</div>
-            </motion.div>
-          </div>
         </motion.div>
 
         {/* Hover Guide Text - Below the circular frame */}
