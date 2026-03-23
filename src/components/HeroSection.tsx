@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Twitter, Instagram, Trophy } from 'lucide-react';
-import { useState, useRef } from 'react';
-import profileImage from '@/assets/profile.jpg';
+import { useState, useRef, useEffect } from 'react';
+import profileImage from '@/assets/profile.png';
 
 const socialLinks = [
   { icon: Github, href: 'https://github.com/Tejasava', label: 'GitHub' },
@@ -15,6 +15,15 @@ const HeroSection = () => {
   const [isHovering, setIsHovering] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Preload video on component mount
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true; // Mute initially to allow autoplay
+      video.load();
+    }
+  }, []);
+
   const scrollTo = (href: string) => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -24,11 +33,33 @@ const HeroSection = () => {
     setIsHovering(true);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          console.error('Error playing video:', error);
+      
+      // Play video immediately on hover (muted first to allow autoplay)
+      const play = async () => {
+        try {
+          videoRef.current!.muted = true;
+          await videoRef.current!.play();
+          // Unmute immediately after playing starts
+          videoRef.current!.muted = false;
+        } catch (error) {
+          console.error('Autoplay failed:', error);
+          // User can click to play manually
+        }
+      };
+      
+      play();
+    }
+  };
+
+  const handleVideoClick = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.muted = false;
+        videoRef.current.play().catch((error) => {
+          console.error('Play failed:', error);
         });
+      } else {
+        videoRef.current.pause();
       }
     }
   };
@@ -128,7 +159,7 @@ const HeroSection = () => {
 
       {/* Profile Image with Video Hover */}
       <motion.div
-        className="mt-16 flex justify-center"
+        className="mt-16 flex flex-col items-center justify-center"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3, type: 'spring', stiffness: 100 }}
@@ -155,35 +186,42 @@ const HeroSection = () => {
           {/* Introduction Video */}
           <video
             ref={videoRef}
-            className={`absolute w-full h-full object-cover transition-opacity duration-300 ${
+            className={`absolute w-full h-full object-cover transition-opacity duration-300 cursor-pointer ${
               isHovering ? 'opacity-100' : 'opacity-0'
             }`}
+            style={{
+              filter: 'brightness(1.1) contrast(1.1)',
+              mixBlendMode: 'screen'
+            }}
             loop
             muted={false}
             playsInline
-            preload="auto"
+            preload="metadata"
             crossOrigin="anonymous"
+            onClick={handleVideoClick}
             onError={(e) => {
               console.error('Video error:', e);
-            }}
-            onCanPlay={() => {
-              console.log('Video ready to play');
             }}
           >
             <source src="/intro-video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+        </motion.div>
 
-          {/* Hover Indicator */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-white text-center"
-            >
-              <div className="text-sm font-semibold">Hover to see intro</div>
-            </motion.div>
-          </div>
+        {/* Hover Guide Text - Below the circular frame */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-6 text-center"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-base md:text-lg font-semibold text-primary"
+          >
+            ↑ Hover to see intro ↑
+          </motion.div>
         </motion.div>
       </motion.div>
     </section>
