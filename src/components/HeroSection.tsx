@@ -16,9 +16,13 @@ const HeroSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.load();
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      // Preload the video to memory
+      video.addEventListener('canplay', () => {
+        // Video is ready to play
+      });
     }
   }, []);
 
@@ -27,24 +31,40 @@ const HeroSection = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = async () => {
     setIsHovering(true);
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      const play = async () => {
-        try {
-          videoRef.current!.muted = true;
-          await videoRef.current!.play();
-          setTimeout(() => {
-            if (videoRef.current) {
-              videoRef.current.muted = false;
-            }
-          }, 100);
-        } catch (error) {
-          console.error('Video play error:', error);
+    const video = videoRef.current;
+    if (video) {
+      try {
+        // Reset video
+        video.currentTime = 0;
+        
+        // Ensure video is muted before autoplay
+        video.muted = true;
+        
+        // Wait a tick to ensure state is updated
+        await new Promise(resolve => setTimeout(resolve, 0));
+        
+        // Try to play
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            // Unmute after successful autoplay
+            setTimeout(() => {
+              if (videoRef.current) {
+                videoRef.current.muted = false;
+              }
+            }, 100);
+          }).catch(error => {
+            console.error('Video autoplay failed:', error);
+            // Fallback: keep muted
+            video.muted = true;
+          });
         }
-      };
-      play();
+      } catch (error) {
+        console.error('Video play error:', error);
+      }
     }
   };
 
@@ -172,9 +192,8 @@ const HeroSection = () => {
               isHovering ? 'opacity-100' : 'opacity-0'
             }`}
             loop
-            muted={false}
             playsInline
-            preload="metadata"
+            preload="auto"
             crossOrigin="anonymous"
             onError={(e) => {
               console.error('Video error:', e);
