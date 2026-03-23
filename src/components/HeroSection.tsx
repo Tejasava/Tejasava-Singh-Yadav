@@ -168,7 +168,7 @@ const HeroSection = () => {
           
           <video
             ref={videoRef}
-            className={`absolute w-full h-full object-cover transition-opacity duration-300 ${
+            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-300 ${
               isHovering ? 'opacity-100' : 'opacity-0'
             }`}
             loop
@@ -193,6 +193,22 @@ const HeroSection = () => {
               <div className="text-sm font-semibold">Hover to see intro</div>
             </motion.div>
           </div>
+        </motion.div>
+
+        {/* Hover Guide Text - Below the circular frame */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-6 text-center"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-base md:text-lg font-semibold text-primary"
+          >
+            ↑ Hover to see intro ↑
+          </motion.div>
         </motion.div>
       </motion.div>
     </section>
