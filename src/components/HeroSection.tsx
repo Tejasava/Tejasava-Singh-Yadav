@@ -13,6 +13,7 @@ const socialLinks = [
 
 const HeroSection = () => {
   const [isHovering, setIsHovering] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -31,8 +32,7 @@ const HeroSection = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleMouseEnter = async () => {
-    setIsHovering(true);
+  const playVideo = async () => {
     const video = videoRef.current;
     if (video) {
       try {
@@ -68,11 +68,36 @@ const HeroSection = () => {
     }
   };
 
+  const handleMouseEnter = async () => {
+    if (!isPlaying) {
+      setIsHovering(true);
+      await playVideo();
+    }
+  };
+
   const handleMouseLeave = () => {
-    setIsHovering(false);
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
+    if (!isPlaying) {
+      setIsHovering(false);
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    }
+  };
+
+  const handleClick = async () => {
+    const video = videoRef.current;
+    if (video && video.paused) {
+      // Video is paused, start playing
+      setIsPlaying(true);
+      setIsHovering(true);
+      await playVideo();
+    } else if (video && !video.paused) {
+      // Video is playing, pause it
+      video.pause();
+      setIsPlaying(false);
+      setIsHovering(false);
+      video.currentTime = 0;
     }
   };
 
@@ -177,6 +202,7 @@ const HeroSection = () => {
           transition={{ duration: 0.3 }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onClick={handleClick}
         >
           <img
             src={profileImage}
@@ -216,7 +242,7 @@ const HeroSection = () => {
             transition={{ duration: 2, repeat: Infinity }}
             className="text-base md:text-lg font-semibold text-primary"
           >
-            ↑ Hover to see intro ↑
+            ↑ Hover or Click to see intro ↑
           </motion.div>
         </motion.div>
       </motion.div>

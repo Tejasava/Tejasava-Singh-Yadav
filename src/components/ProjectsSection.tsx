@@ -5,34 +5,32 @@ import { Github, ExternalLink } from 'lucide-react';
 
 const projects = [
   {
-    title: 'SCHOOLOO',
-    description: 'School discovery and admission platform connecting parents with the best educational institutions',
-    link: 'https://github.com/tejasava/schooloo',
+    title: 'Elanora',
+    description: 'A modern e-commerce website built with React featuring product catalog, shopping cart, and seamless checkout experience with responsive design.',
+    link: 'https://github.com/Tejasava/Elanora',
+    deployed: 'https://elanora-puce.vercel.app/',
   },
   {
-    title: 'SATIS',
-    description: 'AI-powered Training & Interview Simulation Platform for career preparation',
-    link: 'https://github.com/tejasava/satis',
+    title: 'Job Hunter',
+    description: 'Comprehensive job search and discovery platform helping users find ideal career opportunities with advanced filtering and job recommendations.',
+    link: 'https://github.com/Tejasava/Job-Hunter',
   },
   {
-    title: 'Persona-based AI Agents',
-    description: 'Custom AI assistants providing intelligent, personalized recommendations',
-    link: 'https://github.com/tejasava/persona-ai-agents',
+    title: 'JEE Rank & College Predictor',
+    description: 'AI-powered prediction tool that analyzes JEE exam scores and provides accurate college recommendations based on historical cutoff data.',
+    link: 'https://github.com/Tejasava/Jee-Rank-And-College-Predictor-',
+    deployed: 'https://frontend-teal-three-71.vercel.app/',
   },
   {
-    title: 'Cursor AI Clone',
-    description: 'Productivity tool built with OpenAI API & Python for enhanced development workflow',
-    link: 'https://github.com/tejasava/cursor-ai-clone',
+    title: 'Schooloo.ai',
+    description: 'Intelligent school discovery platform leveraging AI to connect students and parents with the best educational institutions.',
+    link: 'https://github.com/Tejasava/schooloo.ai',
   },
   {
-    title: 'AI Automation Tool',
-    description: 'Smart product recommendation system using AI & APIs to find best-priced products',
-    link: 'https://github.com/tejasava/ai-automation-tool',
-  },
-  {
-    title: 'Netflix Clone',
-    description: 'Responsive streaming platform clone with modern UI/UX',
-    link: 'https://github.com/tejasava/netflix-clone',
+    title: 'Emense.in',
+    description: 'Interactive learning platform designed to enhance student engagement with personalized learning paths and comprehensive course materials.',
+    link: 'https://emense.in',
+    deployed: 'https://emense.in',
   },
 ];
 
@@ -88,17 +86,33 @@ const ProjectsSection = () => {
               <h3 className="text-xl md:text-2xl font-bold mb-3 gradient-text">{project.title}</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">{project.description}</p>
               
-              <motion.a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ x: 5 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-primary text-primary font-semibold hover:bg-primary/10 transition-all duration-300"
-              >
-                <Github size={18} />
-                View on GitHub
-                <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.a>
+              <div className="flex flex-col gap-3">
+                <motion.a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ x: 5 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-primary text-primary font-semibold hover:bg-primary/10 transition-all duration-300 w-fit"
+                >
+                  <Github size={18} />
+                  View on GitHub
+                  <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                </motion.a>
+                
+                {project.deployed && (
+                  <motion.a
+                    href={project.deployed}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ x: 5 }}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 border-accent text-accent font-semibold hover:bg-accent/10 transition-all duration-300 w-fit"
+                  >
+                    <ExternalLink size={18} />
+                    View Live Demo
+                    <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </motion.a>
+                )}
+              </div>
             </div>
           </motion.div>
         ))}
