@@ -15,12 +15,10 @@ const HeroSection = () => {
   const [isHovering, setIsHovering] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Preload video on component mount
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = true; // Mute initially to allow autoplay
-      video.load();
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.load();
     }
   }, []);
 
@@ -33,34 +31,20 @@ const HeroSection = () => {
     setIsHovering(true);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      
-      // Play video immediately on hover (muted first to allow autoplay)
       const play = async () => {
         try {
           videoRef.current!.muted = true;
           await videoRef.current!.play();
-          // Unmute immediately after playing starts
-          videoRef.current!.muted = false;
+          setTimeout(() => {
+            if (videoRef.current) {
+              videoRef.current.muted = false;
+            }
+          }, 100);
         } catch (error) {
-          console.error('Autoplay failed:', error);
-          // User can click to play manually
+          console.error('Video play error:', error);
         }
       };
-      
       play();
-    }
-  };
-
-  const handleVideoClick = () => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.muted = false;
-        videoRef.current.play().catch((error) => {
-          console.error('Play failed:', error);
-        });
-      } else {
-        videoRef.current.pause();
-      }
     }
   };
 
@@ -165,7 +149,7 @@ const HeroSection = () => {
         transition={{ duration: 0.8, delay: 0.3, type: 'spring', stiffness: 100 }}
       >
         <motion.div 
-          className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden cursor-pointer relative group flex items-center justify-center"
+          className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden cursor-pointer relative group"
           whileHover={{ 
             boxShadow: '0 0 80px hsl(var(--glow) / 0.6), 0 0 150px hsl(var(--glow-purple) / 0.4)',
             scale: 1.08
@@ -174,7 +158,6 @@ const HeroSection = () => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {/* Profile Image */}
           <img
             src={profileImage}
             alt="Tejasava Singh Yadav"
@@ -183,10 +166,9 @@ const HeroSection = () => {
             }`}
           />
           
-          {/* Introduction Video */}
           <video
             ref={videoRef}
-            className={`absolute w-full h-full object-cover transition-opacity duration-300 cursor-pointer ${
+            className={`absolute w-full h-full object-cover transition-opacity duration-300 ${
               isHovering ? 'opacity-100' : 'opacity-0'
             }`}
             loop
@@ -194,7 +176,6 @@ const HeroSection = () => {
             playsInline
             preload="metadata"
             crossOrigin="anonymous"
-            onClick={handleVideoClick}
             onError={(e) => {
               console.error('Video error:', e);
             }}
@@ -202,22 +183,16 @@ const HeroSection = () => {
             <source src="/intro-video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-        </motion.div>
 
-        {/* Hover Guide Text - Below the circular frame */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-6 text-center"
-        >
-          <motion.div
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="text-base md:text-lg font-semibold text-primary"
-          >
-            ↑ Hover to see intro ↑
-          </motion.div>
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="text-white text-center"
+            >
+              <div className="text-sm font-semibold">Hover to see intro</div>
+            </motion.div>
+          </div>
         </motion.div>
       </motion.div>
     </section>
