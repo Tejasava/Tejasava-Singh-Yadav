@@ -189,10 +189,6 @@ const HeroSection = () => {
             className={`absolute w-full h-full object-cover transition-opacity duration-300 cursor-pointer ${
               isHovering ? 'opacity-100' : 'opacity-0'
             }`}
-            style={{
-              filter: 'brightness(1.1) contrast(1.1)',
-              mixBlendMode: 'screen'
-            }}
             loop
             muted={false}
             playsInline
