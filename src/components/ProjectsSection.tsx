@@ -5,29 +5,14 @@ import { Github, ExternalLink } from 'lucide-react';
 
 const projects = [
   {
-    title: 'SATIS',
-    description: 'AI-powered Training & Interview Simulation Platform for career preparation',
-    link: 'https://github.com/tejasava/satis',
-  },
-  {
     title: 'Persona-based AI Agents',
     description: 'Custom AI assistants providing intelligent, personalized recommendations',
     link: 'https://github.com/tejasava/persona-ai-agents',
   },
   {
-    title: 'Cursor AI Clone',
-    description: 'Productivity tool built with OpenAI API & Python for enhanced development workflow',
-    link: 'https://github.com/tejasava/cursor-ai-clone',
-  },
-  {
     title: 'AI Automation Tool',
     description: 'Smart product recommendation system using AI & APIs to find best-priced products',
     link: 'https://github.com/tejasava/ai-automation-tool',
-  },
-  {
-    title: 'Netflix Clone',
-    description: 'Responsive streaming platform clone with modern UI/UX',
-    link: 'https://github.com/tejasava/netflix-clone',
   },
   {
     title: 'Elanora',
