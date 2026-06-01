@@ -32,6 +32,11 @@ const projects = [
     link: 'https://emense.in',
     deployed: 'https://emense.in',
   },
+  {
+    title: 'Skill Issue',
+    description: 'A comprehensive freelancing platform designed for college students undertaking their final year projects. This platform connects students with expert mentors and resources, enabling seamless collaboration on academic projects. It features project management tools, peer networking, and industry-grade development practices to prepare students for professional environments.',
+    link: 'https://github.com/Tejasava/skill-issue',
+  },
 ];
 
 const ProjectsSection = () => {
